@@ -28,7 +28,7 @@ jobs:
     - name: Package and publish chart
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        IMAGE: docker.io/rubenv/minio-tracer: ${{ steps.tagName.outputs.tag }}
+        IMAGE: "docker.io/rubenv/minio-tracer:${{ steps.tagName.outputs.tag }}"
         VERSION: ${{ steps.tagName.outputs.tag }}
       run: |
           mkdir -p /tmp/out
