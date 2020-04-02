@@ -14,6 +14,16 @@ jobs:
       with:
         persist-credentials: false
 
+    - name: Publish Docker Image to GPR
+      uses: machine-learning-apps/gpr-docker-publish@master
+      id: docker
+      with:
+        IMAGE_NAME: "minio-tracer"
+        DOCKERFILE_PATH: "Dockerfile"
+        BUILD_CONTEXT: "."
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Package and publish chart
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
