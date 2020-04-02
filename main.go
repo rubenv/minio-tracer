@@ -34,9 +34,11 @@ func do() error {
 		serviceName = "minio"
 	}
 
-	namespace := os.Getenv("TRACE_NAMESPACE")
-	if namespace == "" {
-		namespace = "default"
+	namespace := ""
+	// Grab namespace from in-cluster info (if available)
+	ns, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+	if err == nil {
+		namespace = string(ns)
 	}
 
 	// Try in-cluster first
@@ -56,12 +58,6 @@ func do() error {
 		config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
 		if err != nil {
 			return err
-		}
-	} else {
-		// Grab namespace from in-cluster info
-		ns, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
-		if err == nil {
-			namespace = string(ns)
 		}
 	}
 
