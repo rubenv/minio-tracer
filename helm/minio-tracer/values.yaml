@@ -1,0 +1,5 @@
+# Empty value means use the current namespace
+observeNamespace: ""
+
+serviceName: "minio"
+secretName: "minio"

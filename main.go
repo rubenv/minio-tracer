@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -23,9 +24,20 @@ func main() {
 }
 
 func do() error {
-	secretName := "minio"
-	serviceName := "minio"
-	namespace := "default"
+	secretName := os.Getenv("TRACE_SECRET")
+	if secretName == "" {
+		secretName = "minio"
+	}
+
+	serviceName := os.Getenv("TRACE_SERVICE")
+	if serviceName == "" {
+		serviceName = "minio"
+	}
+
+	namespace := os.Getenv("TRACE_NAMESPACE")
+	if namespace == "" {
+		namespace = "default"
+	}
 
 	// Try in-cluster first
 	config, err := rest.InClusterConfig()
@@ -44,6 +56,12 @@ func do() error {
 		config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
 		if err != nil {
 			return err
+		}
+	} else {
+		// Grab namespace from in-cluster info
+		ns, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+		if err == nil {
+			namespace = string(ns)
 		}
 	}
 

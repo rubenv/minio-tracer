@@ -23,3 +23,10 @@ spec:
       - name: minio-tracer
         image: "{{IMAGE}}"
         imagePullPolicy: Always
+        env:
+        - name: TRACE_SECRET
+          value: "{{ .Values.secretName }}"
+        - name: TRACE_SERVICE
+          value: "{{ .Values.serviceName }}"
+        - name: TRACE_NAMESPACE
+          value: "{{ .Values.observeNamespace }}"
