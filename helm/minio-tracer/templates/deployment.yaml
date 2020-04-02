@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-tracer
+  labels:
+    app: minio-tracer
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: minio-tracer
+  template:
+    metadata:
+      labels:
+        app: minio-tracer
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: minio-tracer
+        image: "{{IMAGE}}"
+        imagePullPolicy: Always
