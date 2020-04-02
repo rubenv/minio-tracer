@@ -3,9 +3,9 @@ entries:
   minio-tracer:
   - apiVersion: v1
     appVersion: master
-    created: "2020-04-02T10:15:49.97544136Z"
+    created: "2020-04-02T10:31:09.937283834Z"
     description: MinIO call tracer
-    digest: e3a688c2bc66ae6daca81300ea323f491e96de3b9c07fc719c8545103f2b6e3f
+    digest: 68bf098b13f9a0de95fce949e6dd4605fd5d623e683150cfca09d7f44b91db12
     home: https://github.com/rubenv/minio-tracer
     keywords:
     - storage
@@ -20,4 +20,4 @@ entries:
     urls:
     - minio-tracer-0.0.1.tgz
     version: 0.0.1
-generated: "2020-04-02T10:15:49.975028861Z"
+generated: "2020-04-02T10:31:09.936833633Z"
