@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: minio-tracer
+subjects:
+- kind: ServiceAccount
+  name: minio-tracer
+roleRef:
+  kind: Role
+  name: minio-tracer
+  apiGroup: rbac.authorization.k8s.io
+
