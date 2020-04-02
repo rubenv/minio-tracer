@@ -31,7 +31,7 @@ jobs:
         IMAGE_URL: ${{ steps.docker.outputs.IMAGE_URL }}
       run: |
           mkdir -p /tmp/out
-          sed -i -e "s,{{IMAGE}},$IMAGE_URL/$IMAGE_SHA_NAME," \
+          sed -i -e "s,{{IMAGE}},$IMAGE_URL/$IMAGE_SHA_NAME," helm/minio-tracer/templates/deployment.yaml
           helm package -d /tmp/out ./helm/minio-tracer
 
           git remote set-url origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
