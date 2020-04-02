@@ -1,7 +1,7 @@
 apiVersion: v1
 description: MinIO call tracer
 name: minio-tracer
-version: 0.0.1
+version: {{VERSION}}
 appVersion: master
 keywords:
 - storage
