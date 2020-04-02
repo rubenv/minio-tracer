@@ -20,8 +20,8 @@ jobs:
     - name: Publish Docker Image
       uses: docker/build-push-action@v1
       with:
-        username: ${{ DOCKER_USERNAME }}
-        password: ${{ DOCKER_PASSWORD }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
         repository: rubenv/minio-tracer
         tags: ${{ steps.tagName.outputs.tag }}
 
