@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/kr/pretty"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -148,10 +147,7 @@ func ensureTracing(ak, sk string, endpoints []string) error {
 	}
 
 	for ep, t := range unseen {
-		err := stopTracing(t)
-		if err != nil {
-			return err
-		}
+		t.stop()
 		delete(running, ep)
 	}
 
@@ -173,15 +169,13 @@ func startTracing(accesskey, secretkey, endpoint string) (*tracer, error) {
 	return t, nil
 }
 
-func stopTracing(t *tracer) error {
+func (t *tracer) stop() {
 	t.cf()
-	return nil
 }
 
 func (t *tracer) run() {
 	err := t.do()
 	if err != nil {
-		pretty.Log(err)
 		log.Printf("Tracer failed for %s: %s", t.endpoint, err)
 	}
 }
@@ -192,5 +186,9 @@ func (t *tracer) do() error {
 	cmd.Env = append(os.Environ(), conn)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
-	return cmd.Run()
+	err := cmd.Run()
+	if t.ctx.Err() == context.Canceled {
+		err = nil // Ignore errors after a request to stop
+	}
+	return err
 }
