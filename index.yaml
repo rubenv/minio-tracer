@@ -1,0 +1,23 @@
+apiVersion: v1
+entries:
+  minio-tracer:
+  - apiVersion: v1
+    appVersion: master
+    created: "2020-04-02T10:15:49.97544136Z"
+    description: MinIO call tracer
+    digest: e3a688c2bc66ae6daca81300ea323f491e96de3b9c07fc719c8545103f2b6e3f
+    home: https://github.com/rubenv/minio-tracer
+    keywords:
+    - storage
+    - object-storage
+    - S3
+    maintainers:
+    - email: ruben@rocketeer.be
+      name: Ruben Vermeersch
+    name: minio-tracer
+    sources:
+    - https://github.com/rubenv/minio-tracer
+    urls:
+    - minio-tracer-0.0.1.tgz
+    version: 0.0.1
+generated: "2020-04-02T10:15:49.975028861Z"
