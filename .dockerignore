@@ -1,0 +1,6 @@
+Dockerfile
+.dockerignore
+.git
+.github
+helm
+README.md

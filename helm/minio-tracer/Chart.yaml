@@ -1,0 +1,15 @@
+apiVersion: v1
+description: MinIO call tracer
+name: minio-tracer
+version: 0.0.1
+appVersion: master
+keywords:
+- storage
+- object-storage
+- S3
+home: https://github.com/rubenv/minio-tracer
+sources:
+- https://github.com/rubenv/minio-tracer
+maintainers:
+- name: Ruben Vermeersch
+  email: ruben@rocketeer.be
