@@ -17,26 +17,22 @@ jobs:
     - uses: olegtarasov/get-tag@v2
       id: tagName
 
-    - name: Publish Docker Image to GPR
-      uses: machine-learning-apps/gpr-docker-publish@master
-      id: docker
+    ‐ name: Publish Docker Image
+      uses: docker/build-push-action@v1
       with:
-        IMAGE_NAME: "minio-tracer"
-        DOCKERFILE_PATH: "Dockerfile"
-        TAG: ${{ steps.tagName.outputs.tag }}
-        BUILD_CONTEXT: "."
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        username: ${{ DOCKER_USERNAME }}
+        password: ${{ DOCKER_PASSWORD }}
+        repository: rubenv/minio-tracer
+        tags: ${{ steps.tagName.outputs.tag }}
 
     - name: Package and publish chart
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        IMAGE_SHA_NAME: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
-        IMAGE_URL: ${{ steps.docker.outputs.IMAGE_URL }}
+        IMAGE: docker.io/rubenv/minio-tracer: ${{ steps.tagName.outputs.tag }}
         VERSION: ${{ steps.tagName.outputs.tag }}
       run: |
           mkdir -p /tmp/out
-          sed -i -e "s,{{IMAGE}},$IMAGE_URL/$IMAGE_SHA_NAME," helm/minio-tracer/templates/deployment.yaml
+          sed -i -e "s,{{IMAGE}},$IMAGE," helm/minio-tracer/templates/deployment.yaml
           sed -i -e "s,{{VERSION}},$VERSION," helm/minio-tracer/Chart.yaml
           helm package -d /tmp/out ./helm/minio-tracer
           git checkout .
