@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
+	"github.com/kr/pretty"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -180,6 +181,7 @@ func stopTracing(t *tracer) error {
 func (t *tracer) run() {
 	err := t.do()
 	if err != nil {
+		pretty.Log(err)
 		log.Printf("Tracer failed for %s: %s", t.endpoint, err)
 	}
 }
